@@ -37,6 +37,11 @@ public class Row {
 	}
 	
 	
+	public void set(String columnName, Object value) {
+		columns.put(columnName.toLowerCase(), value);
+	}
+	
+	
 	/**
 	 * This is used for 'SELECT col1, col2, ...'
 	 * @param columnNames

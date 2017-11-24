@@ -25,6 +25,11 @@ public class Table {
 	}
 	
 	
+	/**
+	 * <code>
+	 *     table.setColumnNames("id", "lastName", "firstName", "gender", "age");
+	 * </code>
+	 */
 	public void setColumnNames(String... columnNames) {
 		for (String name : columnNames) {
 			this.columnNames.add(name);
@@ -33,6 +38,11 @@ public class Table {
 	}
 	
 	
+	/**
+	 * <code>
+	 *     table.setColumnNamesAutomatically(User.class);
+	 * </code>
+	 */
 	public void setColumnNamesAutomatically(Class c) {
 		String[] fieldNames = new String[c.getFields().length];
 		Field[] fields = c.getFields();
@@ -61,8 +71,7 @@ public class Table {
 	}
 	
 	
-	public int deleteRowsWhere(String columnName, String expectedValue) {
-		int numberOfRowsDeleted = 0;
+	public int deleteRowsWhere(String columnName, Object expectedValue) {
 		List<Row> rowsToDelete = new ArrayList<>();
 		JSONObject condition = new JSONObject();
 		condition.put(columnName.toLowerCase(), expectedValue);
@@ -78,6 +87,20 @@ public class Table {
 	}
 	
 	
+	public int updateRowsWhere(String whereColumnName, Object expectedValue, String columnNameToUpdate, Object newValue) {
+		int updates = 0;
+		JSONObject condition = new JSONObject();
+		condition.put(whereColumnName.toLowerCase(), expectedValue);
+		for (Row row : rows) {
+			if ((row.get(whereColumnName)).equals(condition.toString())) {
+				row.set(columnNameToUpdate, newValue);
+				updates++;
+			}
+		}
+		return updates;
+	}
+	
+	
 	public void insert(Object... objects) {
 		if (!tableColumnNamesInitialized) {
 			System.out.println("TABLE COLUMN NAMES ARE NOT INITIALIZED");
@@ -85,7 +108,5 @@ public class Table {
 			rows.add(new Row(columnNames, objects));
 		}
 	}
-	
-	
 	
 }
