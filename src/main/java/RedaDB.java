@@ -1,12 +1,20 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class RedaDB {
 	
 	private Map<String, Table> db;
+	
+	private String hostname;
+	//private String database; // OPT
+	
+	
+	public RedaDB(String hostname) {
+		this();
+		this.hostname = hostname;
+		
+	}
 	
 	
 	public RedaDB() {
@@ -46,17 +54,29 @@ public class RedaDB {
 	public static void main(String... args) {
 		RedaDB reda = new RedaDB();
 		Table table = reda.createTable("user");
-		table.setColumnNames("id", "lastName", "firstName", "gender", "age");
 		
+		table.setColumnNamesAutomatically(User.class);
+		//table.setColumnNames("id", "lastName", "firstName", "gender", "age");
+		
+		/*
 		table.insert(1, "DOE", "John", 'M', 17);
 		table.insert(2, "DOE", "Jane");
 		table.insert(3, "?", "Reda");
 		
-		System.out.println("SELECT id FROM user");
+		//table.insert(new User(1, "John", "Doe", 'M', 69));
+		
+		
+		System.out.println("SELECT * FROM user");
+		for (Row row : table.getRows()) {
+			System.out.println(row.get("*"));
+		}*/
+		
+		
+		/*
+		System.out.println("\nSELECT id FROM user");
 		for (Row row : table.getRows()) {
 			System.out.println(row.get("id"));
 		}
-		
 		
 		System.out.println("\nSELECT id, lastName FROM user");
 		table = reda.getTable("user");
@@ -68,6 +88,19 @@ public class RedaDB {
 		for (Row row : table.getRows()) {
 			System.out.println(row.get("id", "lastname", "age"));
 		}
+		
+		System.out.println("\nSELECT * FROM user WHERE firstName = 'John'");
+		for (Row row : table.getRowsWhere("firstName", "John")) {
+			System.out.println(row.get("*"));
+		}
+		
+		
+		System.out.println("\nDELETE FROM user WHERE firstName = 'John'");
+		int rowsDeleted = table.deleteRowsWhere("firstName", "John");
+		System.out.println("Rows deleted: "+rowsDeleted);
+		
+		*/
+		
 		
 	}
 	
