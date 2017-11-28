@@ -55,6 +55,12 @@ public class Table {
 	}
 	
 	
+	/**
+	 * Gets a list of row WHERE columnName = expectedValue
+	 * @param columnName  Name of the column
+	 * @param expectedValue  Expected value
+	 * @return List of rows
+	 */
 	public List<Row> getRowsWhere(String columnName, Object expectedValue) {
 		List<Row> result = new ArrayList<>();
 		JSONObject condition = new JSONObject();
@@ -68,6 +74,12 @@ public class Table {
 	}
 	
 	
+	/**
+	 * Deletes all rows WHERE columnName = expectedValue
+	 * @param columnName  Name of the column
+	 * @param expectedValue  Expected value
+	 * @return Number of rows deleted
+	 */
 	public int deleteRowsWhere(String columnName, Object expectedValue) {
 		List<Row> rowsToDelete = new ArrayList<>();
 		JSONObject condition = new JSONObject();
@@ -84,6 +96,14 @@ public class Table {
 	}
 	
 	
+	/**
+	 * Update columnNameToUpdate to newValue in all rows WHERE whereColumnName = expectedValue
+	 * @param whereColumnName  Name of the column to search through
+	 * @param expectedValue  Expected value (whereColumnName)
+	 * @param columnNameToUpdate  Name of the column to update
+	 * @param newValue  New value (columnNameToUpdate)
+	 * @return Number of rows updated
+	 */
 	public int updateRowsWhere(String whereColumnName, Object expectedValue, String columnNameToUpdate, Object newValue) {
 		int updates = 0;
 		JSONObject condition = new JSONObject();
@@ -107,11 +127,19 @@ public class Table {
 	}
 	
 	
+	/**
+	 * Gets all column names
+	 * @return
+	 */
 	public List<String> getColumnNames() {
 		return columnNames;
 	}
 	
 	
+	/**
+	 * Sets column names
+	 * @param columnNames  Column names
+	 */
 	public void setColumnNames(List<String> columnNames) {
 		this.columnNames = columnNames;
 	}
