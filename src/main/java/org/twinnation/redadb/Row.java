@@ -1,3 +1,5 @@
+package org.twinnation.redadb;
+
 import jdk.nashorn.internal.runtime.JSONFunctions;
 import org.json.JSONObject;
 
@@ -23,8 +25,6 @@ public class Row {
 	
 	/**
 	 * This is used for 'SELECT col' OR 'SELECT *'
-	 * @param columnName
-	 * @return
 	 */
 	public Object get(String columnName) {
 		JSONObject result = new JSONObject();
@@ -78,7 +78,7 @@ public class Row {
 	
 	
 	@Override public String toString() {
-		return "Row{" +
+		return "org.twinnation.redadb.Row{" +
 			  "columns=" + columns +
 			  '}';
 	}

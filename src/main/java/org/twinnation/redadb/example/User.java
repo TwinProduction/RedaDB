@@ -1,11 +1,12 @@
+package org.twinnation.redadb.example;
 
 public class User {
 	
-	public int id;
-	public String firstName;
-	public String lastName;
-	public char gender;
-	public int age;
+	private int id;
+	private String firstName;
+	private String lastName;
+	private char gender;
+	private int age;
 	
 	
 	public User(int id, String firstName, String lastName, char gender, int age) {
@@ -70,4 +71,5 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
 }

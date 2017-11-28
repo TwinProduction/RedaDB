@@ -1,3 +1,5 @@
+package org.twinnation.redadb;
+
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
@@ -40,21 +42,16 @@ public class Table {
 	
 	/**
 	 * <code>
-	 *     table.setColumnNamesAutomatically(User.class);
+	 *     table.setColumnNamesAutomatically(org.twinnation.redadb.example.User.class);
 	 * </code>
 	 */
 	public void setColumnNamesAutomatically(Class c) {
-		String[] fieldNames = new String[c.getFields().length];
-		Field[] fields = c.getFields();
-		for (int i = 0; i < c.getFields().length; i++) {
+		String[] fieldNames = new String[c.getDeclaredFields().length];
+		Field[] fields = c.getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
 			fieldNames[i] = fields[i].getName();
 		}
 		setColumnNames(fieldNames);
-	}
-	
-	
-	public List<Row> getRows() {
-		return rows;
 	}
 	
 	
@@ -107,6 +104,36 @@ public class Table {
 		} else {
 			rows.add(new Row(columnNames, objects));
 		}
+	}
+	
+	
+	public List<String> getColumnNames() {
+		return columnNames;
+	}
+	
+	
+	public void setColumnNames(List<String> columnNames) {
+		this.columnNames = columnNames;
+	}
+	
+	
+	public List<Row> getRows() {
+		return rows;
+	}
+	
+	
+	public void setRows(List<Row> rows) {
+		this.rows = rows;
+	}
+	
+	
+	public boolean isTableColumnNamesInitialized() {
+		return tableColumnNamesInitialized;
+	}
+	
+	
+	public void setTableColumnNamesInitialized(boolean tableColumnNamesInitialized) {
+		this.tableColumnNamesInitialized = tableColumnNamesInitialized;
 	}
 	
 }
