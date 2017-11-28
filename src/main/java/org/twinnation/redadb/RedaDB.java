@@ -21,6 +21,9 @@ public class RedaDB {
 	}
 	
 	
+	/**
+	 * Saves RedaDB in a table named "RedaDB".
+	 */
 	public void commit() {
 		RedaDBBuilder builder = new RedaDBBuilder(hostname, db);
 		try {
@@ -32,11 +35,24 @@ public class RedaDB {
 	}
 	
 	
+	/**
+	 * Loads data from the database.
+	 */
 	public void loadFromDatabase() {
 		RedaDBBuilder builder = new RedaDBBuilder(hostname, db);
+		try {
+			this.db = builder.loadFromDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
+	/**
+	 * Creates a table
+	 * @param tableName  Name of the table to create
+	 * @return the table created
+	 */
 	public Table createTable(String tableName) {
 		if (!db.containsKey(tableName)) {
 			db.put(tableName, new Table());
@@ -45,6 +61,11 @@ public class RedaDB {
 	}
 	
 	
+	/**
+	 * Gets a table
+	 * @param tableName  Name of the table
+	 * @return The table
+	 */
 	public Table getTable(String tableName) {
 		return db.get(tableName);
 	}

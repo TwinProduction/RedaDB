@@ -1,5 +1,8 @@
 package org.twinnation.redadb.example;
 
+/**
+ * Sample class for testing
+ */
 public class Fruit {
 	
 	private int id;

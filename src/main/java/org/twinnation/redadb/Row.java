@@ -1,9 +1,7 @@
 package org.twinnation.redadb;
 
-import jdk.nashorn.internal.runtime.JSONFunctions;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +23,10 @@ public class Row {
 	
 	/**
 	 * This is used for 'SELECT col' OR 'SELECT *'
+	 * <code>
+	 *     row.get("col1");
+	 *     row.get("*");
+	 * </code>
 	 */
 	public Object get(String columnName) {
 		JSONObject result = new JSONObject();
@@ -37,6 +39,13 @@ public class Row {
 	}
 	
 	
+	/**
+	 * This is used for 'SELECT col' OR 'SELECT *'
+	 * <code>
+	 *     row.get("col1");
+	 *     row.get("*");
+	 * </code>
+	 */
 	public void set(String columnName, Object value) {
 		columns.put(columnName.toLowerCase(), value);
 	}

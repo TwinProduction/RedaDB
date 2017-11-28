@@ -3,6 +3,7 @@ package org.twinnation.redadb;
 import com.google.gson.Gson;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -15,6 +16,12 @@ public class RedaDBBuilder {
 	public RedaDBBuilder(String hostname, Map<String, Table> db) {
 		this.hostname = hostname;
 		this.db = db;
+	}
+	
+	
+	public RedaDBBuilder(String hostname) {
+		this.hostname = hostname;
+		this.db = new HashMap<>();
 	}
 	
 	
@@ -57,13 +64,13 @@ public class RedaDBBuilder {
 				System.out.println("Failed to insert table \"" + tableName + "\": " + e.getMessage());
 			}
 		}
+		// XXX: should probably empty db map in this class after it has been saved
 	}
 	
 	
 	public void insertTable(String tableName, Table table) throws SQLException{
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet rs = null;
 		
 		try {
 			connection = DriverManager.getConnection(hostname);
@@ -76,37 +83,28 @@ public class RedaDBBuilder {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) { rs.close(); }
 			if (statement != null) { statement.close(); }
 			if (connection != null) { connection.close(); }
 		}
 	}
 	
 	
-	public void loadVirtualDB() {
-	
-	}
-	
-	
-	/*
-
-	public static void insertUsingPreparedStatement() throws SQLException {
+	public Map<String, Table> loadFromDatabase() throws SQLException {
+		this.db = new HashMap<>();
 		Connection connection = null;
-		PreparedStatement statement = null;
+		Statement statement = null;
 		ResultSet rs = null;
 		
 		try {
-			connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-			statement = connection.prepareStatement("INSERT INTO employees (last_name, first_name, email, department, salary) VALUES (?, ?, ?, ?, ?)");
+			connection = DriverManager.getConnection(hostname);
+			statement = connection.createStatement();
+			rs = statement.executeQuery("SELECT * FROM RedaDB");
 			
-			statement.setString(1, "Elvis");
-			statement.setString(2, "Presley");
-			statement.setString(3, "elvis@rock.com");
-			statement.setString(4, "Musique");
-			statement.setFloat(5, 88888.88f);
-			
-			statement.executeUpdate();
-			
+			while (rs.next()) {
+				Table table = new Gson().fromJson(rs.getString("table_content"), Table.class);
+				String tableName = new Gson().fromJson(rs.getString("table_name"), String.class);
+				this.db.put(tableName, table);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -114,12 +112,7 @@ public class RedaDBBuilder {
 			if (statement != null) { statement.close(); }
 			if (connection != null) { connection.close(); }
 		}
+		return db;
 	}
-	 */
-	
-	
-	
-	
-	
 	
 }

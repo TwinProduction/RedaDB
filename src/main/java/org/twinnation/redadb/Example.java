@@ -10,6 +10,7 @@ public class Example {
 	
 	
 	public static void main(String... args) {
+		//redaDB.loadFromDatabase();
 		createFruitTableExample();
 		createUserTableExample();
 		queryExamples();
@@ -29,9 +30,6 @@ public class Example {
 		
 		redaDB.commit();
 	}
-	
-	
-	
 	
 	
 	public static void createUserTableExample() {
