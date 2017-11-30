@@ -13,12 +13,21 @@ public class RedaDBBuilder {
 	private String hostname;
 	
 	
+	/**
+	 * This constructor should be used for saving a database
+	 * @param hostname JDBC url
+	 * @param db
+	 */
 	public RedaDBBuilder(String hostname, Map<String, Table> db) {
 		this.hostname = hostname;
 		this.db = db;
 	}
 	
 	
+	/**
+	 * This constructor should be used for loading a database.
+	 * @param hostname JDBC url
+	 */
 	public RedaDBBuilder(String hostname) {
 		this.hostname = hostname;
 		this.db = new HashMap<>();
@@ -54,7 +63,10 @@ public class RedaDBBuilder {
 	}
 	
 	
-	
+	/**
+	 * Saves all tables in a SQL table called "redadb".
+	 * Each table in RedaDB is saved as a row in MySQL
+	 */
 	public void saveRedaDB() {
 		for (String tableName : db.keySet()) {
 			Table table = db.get(tableName);
@@ -68,6 +80,12 @@ public class RedaDBBuilder {
 	}
 	
 	
+	/**
+	 * Inserts one table in MySQL
+	 * @param tableName
+	 * @param table
+	 * @throws SQLException
+	 */
 	public void insertTable(String tableName, Table table) throws SQLException{
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -89,6 +107,9 @@ public class RedaDBBuilder {
 	}
 	
 	
+	/**
+	 * Loads all tables from the database
+	 */
 	public Map<String, Table> loadFromDatabase() throws SQLException {
 		this.db = new HashMap<>();
 		Connection connection = null;
